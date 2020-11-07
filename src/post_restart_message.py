@@ -29,9 +29,13 @@
 import requests
 import time
 import RPi.GPIO as GPIO
+import json 
 
-TOKEN = "XXXXXXXXXXXXXXXXXXXX"  # Put your TOKEN here
-DEVICE = "raspberry-bandwidth-monitor"  # Put your device label here
+with open('config.json') as f:
+    j = json.load(f)
+    TOKEN = j['token']
+    DEVICE = j["device"]  # Put your device label here
+
 VARIABLE = "killswitch"  # Put your first variable label here
 VARIABLE_2 = "reset-code"  # Put your second variable label here
 
@@ -41,12 +45,13 @@ GREEN = 5
 BLUE = 6
 RED = 13
 
-GPIO.setup(GREEN,GPIO.OUT)
-GPIO.setup(BLUE,GPIO.OUT)
-GPIO.setup(RED,GPIO.OUT)
-GPIO.output(GREEN,GPIO.HIGH)
-GPIO.output(BLUE,GPIO.HIGH)
-GPIO.output(RED,GPIO.HIGH)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.output(GREEN, GPIO.HIGH)
+GPIO.output(BLUE, GPIO.HIGH)
+GPIO.output(RED, GPIO.HIGH)
+
 
 def post_request(payload):
     # Creates the headers for the HTTP requests
@@ -72,19 +77,20 @@ def post_request(payload):
     print("[INFO] request made properly, your device is updated")
     return True
 
+
 if __name__ == "__main__":
 
-    GPIO.output(BLUE,GPIO.LOW)
+    GPIO.output(BLUE, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(BLUE,GPIO.HIGH)
+    GPIO.output(BLUE, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(BLUE,GPIO.LOW)
+    GPIO.output(BLUE, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(BLUE,GPIO.HIGH)
+    GPIO.output(BLUE, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(BLUE,GPIO.LOW)
+    GPIO.output(BLUE, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(BLUE,GPIO.HIGH)
+    GPIO.output(BLUE, GPIO.HIGH)
 
     time.sleep(180)
     post_request({VARIABLE: 0.0, VARIABLE_2: 3.0})

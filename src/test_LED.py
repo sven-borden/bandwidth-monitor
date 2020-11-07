@@ -36,24 +36,23 @@ GREEN = 5
 BLUE = 6
 RED = 13
 
-GPIO.setup(GREEN,GPIO.OUT)
-GPIO.setup(BLUE,GPIO.OUT)
-GPIO.setup(RED,GPIO.OUT)
-GPIO.output(GREEN,GPIO.HIGH)
-GPIO.output(BLUE,GPIO.HIGH)
-GPIO.output(RED,GPIO.HIGH)
-
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.output(GREEN, GPIO.HIGH)
+GPIO.output(BLUE, GPIO.HIGH)
+GPIO.output(RED, GPIO.HIGH)
 
 
 if __name__ == "__main__":
-    print ("Starting LED Test")
-    GPIO.output(GREEN,GPIO.LOW)
+    print("Starting LED Test")
+    GPIO.output(GREEN, GPIO.LOW)
     time.sleep(1)
-    GPIO.output(GREEN,GPIO.HIGH)
-    GPIO.output(BLUE,GPIO.LOW)
+    GPIO.output(GREEN, GPIO.HIGH)
+    GPIO.output(BLUE, GPIO.LOW)
     time.sleep(1)
-    GPIO.output(BLUE,GPIO.HIGH)
-    GPIO.output(RED,GPIO.LOW)
+    GPIO.output(BLUE, GPIO.HIGH)
+    GPIO.output(RED, GPIO.LOW)
     time.sleep(1)
-    GPIO.output(RED,GPIO.HIGH)
+    GPIO.output(RED, GPIO.HIGH)
     print("Test finished")

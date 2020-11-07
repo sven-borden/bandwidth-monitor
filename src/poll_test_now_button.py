@@ -38,30 +38,30 @@ GREEN = 5
 BLUE = 6
 RED = 13
 
-GPIO.setup(GREEN,GPIO.OUT)
-GPIO.setup(BLUE,GPIO.OUT)
-GPIO.setup(RED,GPIO.OUT)
-GPIO.output(GREEN,GPIO.HIGH)
-GPIO.output(BLUE,GPIO.HIGH)
-GPIO.output(RED,GPIO.HIGH)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.output(GREEN, GPIO.HIGH)
+GPIO.output(BLUE, GPIO.HIGH)
+GPIO.output(RED, GPIO.HIGH)
 
 TestNowButton = 16
 
 GPIO.setup(TestNowButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 if __name__ == "__main__":
-    #time.sleep(60)
-    GPIO.output(RED,GPIO.LOW)
+    # time.sleep(60)
+    GPIO.output(RED, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(RED,GPIO.HIGH)
+    GPIO.output(RED, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(RED,GPIO.LOW)
+    GPIO.output(RED, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(RED,GPIO.HIGH)
+    GPIO.output(RED, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(RED,GPIO.LOW)
+    GPIO.output(RED, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(RED,GPIO.HIGH)
+    GPIO.output(RED, GPIO.HIGH)
 
     while True:
         try:

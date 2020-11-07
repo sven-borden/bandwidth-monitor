@@ -30,32 +30,36 @@
 import requests
 import time
 import RPi.GPIO as GPIO
+import json
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 RELAIS_1 = 21
-GPIO.setup(RELAIS_1,GPIO.OUT)
-GPIO.output(RELAIS_1,GPIO.HIGH)
+GPIO.setup(RELAIS_1, GPIO.OUT)
+GPIO.output(RELAIS_1, GPIO.HIGH)
 
 GREEN = 5
 BLUE = 6
 RED = 13
 
-GPIO.setup(GREEN,GPIO.OUT)
-GPIO.setup(BLUE,GPIO.OUT)
-GPIO.setup(RED,GPIO.OUT)
+GPIO.setup(GREEN ,GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
 #GPIO.output(GREEN,GPIO.HIGH)
 #GPIO.output(BLUE,GPIO.HIGH)
 #GPIO.output(RED,GPIO.HIGH)
 
 
-TOKEN = "XXXXXXXXXXXXXXXXXXXX"  # Put your TOKEN here
-DEVICE = "raspberry-bandwidth-monitor"  # Put your device label here
+with open('config.json') as f:
+    j = json.load(f)
+    TOKEN = j['token']
+    DEVICE = j['device']
 VARIABLE = "killswitch"  # Put your first variable label here
 VARIABLE_2 = "reset-code"  # Put your second variable label here
 
 print_messages = False
 killSwitch_state = 0
+
 
 def get_var(device, variable):
     try:
@@ -67,6 +71,7 @@ def get_var(device, variable):
         return req.json()['last_value']['value']
     except:
         pass
+
 
 def post_request(payload):
     # Creates the headers for the HTTP requests
@@ -94,17 +99,18 @@ def post_request(payload):
         print("[INFO] request made properly, your device is updated")
     return True
 
+
 if __name__ == "__main__":
-    GPIO.output(GREEN,GPIO.LOW)
-    killSwitch_state=get_var(DEVICE, VARIABLE)
-    GPIO.output(GREEN,GPIO.HIGH)
+    GPIO.output(GREEN, GPIO.LOW)
+    killSwitch_state = get_var(DEVICE, VARIABLE)
+    GPIO.output(GREEN, GPIO.HIGH)
     if print_messages:
         print("Kill switch state: %d" % killSwitch_state)
     if killSwitch_state == 1.0:
-        GPIO.output(RELAIS_1,GPIO.LOW)
+        GPIO.output(RELAIS_1, GPIO.LOW)
         if print_messages:
             print('kill em all')
         time.sleep(5)
-        GPIO.output(RELAIS_1,GPIO.HIGH)
+        GPIO.output(RELAIS_1, GPIO.HIGH)
         time.sleep(60)
         post_request({VARIABLE: 0.0, VARIABLE_2: 1.0})

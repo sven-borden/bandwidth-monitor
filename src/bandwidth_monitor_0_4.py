@@ -2,7 +2,7 @@ import epd2in9
 from PIL import Image, ImageFont, ImageDraw
 import speedtest
 import time
-
+import json
 import requests
 
 import RPi.GPIO as GPIO
@@ -10,23 +10,25 @@ import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 RELAIS_1 = 21
-GPIO.setup(RELAIS_1,GPIO.OUT)
-GPIO.output(RELAIS_1,GPIO.HIGH)
+GPIO.setup(RELAIS_1, GPIO.OUT)
+GPIO.output(RELAIS_1, GPIO.HIGH)
 
 GREEN = 5
 BLUE = 6
 RED = 13
 
-GPIO.setup(GREEN,GPIO.OUT)
-GPIO.setup(BLUE,GPIO.OUT)
-GPIO.setup(RED,GPIO.OUT)
-GPIO.output(GREEN,GPIO.HIGH)
-GPIO.output(BLUE,GPIO.HIGH)
-GPIO.output(RED,GPIO.HIGH)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.output(GREEN, GPIO.HIGH)
+GPIO.output(BLUE, GPIO.HIGH)
+GPIO.output(RED, GPIO.HIGH)
 
+with open('config.json') as f:
+    j = json.load(f)
+    TOKEN = j['token']
+    DEVICE_LABEL = j['device']
 
-TOKEN = "XXXXXXXXXXXXXXXXXXXX"  # Put your TOKEN here
-DEVICE_LABEL = "raspberry-bandwidth-monitor"  # Put your device label here
 VARIABLE_LABEL_1 = "Upload"  # Put your first variable label here
 VARIABLE_LABEL_2 = "Download"  # Put your first variable label here
 VARIABLE_LABEL_3 = "Ping"  # Put your first variable label here
@@ -39,6 +41,7 @@ print_messages = False
 
 lower_limit = 5000000  # Threshold for download speed -> modem will be reseted
 max_iterations = 3
+
 
 def post_request(payload):
     # Creates the headers for the HTTP requests
@@ -59,8 +62,6 @@ def post_request(payload):
             attempts += 1
             time.sleep(1)
 
-
-
     # Processes results
     if status >= 400:
         if print_messages:
@@ -72,26 +73,26 @@ def post_request(payload):
         print("[INFO] request made properly, your device is updated")
     return True
 
+
 def green_LED_on(state):
-    if state == True:
-        GPIO.output(GREEN,GPIO.LOW)
+    if state is True:
+        GPIO.output(GREEN, GPIO.LOW)
     else:
-        GPIO.output(GREEN,GPIO.HIGH)
+        GPIO.output(GREEN, GPIO.HIGH)
 
 
 def blue_LED_on(state):
-    if state == True:
-        GPIO.output(BLUE,GPIO.LOW)
+    if state is True:
+        GPIO.output(BLUE, GPIO.LOW)
     else:
-        GPIO.output(BLUE,GPIO.HIGH)
+        GPIO.output(BLUE, GPIO.HIGH)
 
 
 def red_LED_on(state):
-    if state == True:
-        GPIO.output(RED,GPIO.LOW)
+    if state is True:
+        GPIO.output(RED, GPIO.LOW)
     else:
-        GPIO.output(RED,GPIO.HIGH)
-
+        GPIO.output(RED, GPIO.HIGH)
 
 
 def main():
@@ -107,11 +108,11 @@ def main():
             print("Bandwidth below limit or first iteration, Iteration %d" % (i))
         if i > max_iterations:
             # reset
-            GPIO.output(RELAIS_1,GPIO.LOW)
+            GPIO.output(RELAIS_1, GPIO.LOW)
             if print_messages:
                 print('kill em all')
             time.sleep(5)
-            GPIO.output(RELAIS_1,GPIO.HIGH)
+            GPIO.output(RELAIS_1, GPIO.HIGH)
             time.sleep(60)
             post_request({VARIABLE: 0.0, VARIABLE_2: 2.0})
             red_LED_on(False)
@@ -153,7 +154,7 @@ def main():
         else:
             red_LED_on(False)
 
-    image = Image.new('1', (epd2in9.EPD_HEIGHT,epd2in9.EPD_WIDTH), 255)  # 255: clear the frame
+    image = Image.new('1', (epd2in9.EPD_HEIGHT, epd2in9.EPD_WIDTH), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(image)
 
     # write strings to the buffer

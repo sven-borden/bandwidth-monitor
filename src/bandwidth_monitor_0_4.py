@@ -1,5 +1,3 @@
-import epd2in9
-from PIL import Image, ImageFont, ImageDraw
 import speedtest
 import time
 import json
@@ -96,9 +94,6 @@ def red_LED_on(state):
 
 
 def main():
-    epd = epd2in9.EPD()
-    epd.init(epd.lut_full_update)
-
     bw_down = 0
     i = 0
 
@@ -106,6 +101,7 @@ def main():
         i += 1
         if print_messages:
             print("Bandwidth below limit or first iteration, Iteration %d" % (i))
+
         if i > max_iterations:
             # reset
             GPIO.output(RELAIS_1, GPIO.LOW)
@@ -117,17 +113,13 @@ def main():
             post_request({VARIABLE: 0.0, VARIABLE_2: 2.0})
             red_LED_on(False)
             break
+
         if print_messages:
             print("Speedtest started")
+
         try:
             blue_LED_on(True)
 
-            #SIMULATE
-            # bw_down = 18780752.1644
-            # bw_up = 4100042.51876
-            # ping = 33.941
-
-            #TEST
             s = speedtest.Speedtest()
             s.get_best_server()
             bw_down = s.download()
@@ -143,7 +135,7 @@ def main():
             blue_LED_on(False)
             if print_messages:
                 print("Speedtest failed")
-        current_time = time.strftime("%H:%M:%S, %d.%m.%Y")
+
         if print_messages:
             print("Download: %d, Upload: %d, Ping: %d" % (bw_down, bw_up, ping))
         if bw_down < lower_limit:
@@ -154,55 +146,16 @@ def main():
         else:
             red_LED_on(False)
 
-    image = Image.new('1', (epd2in9.EPD_HEIGHT, epd2in9.EPD_WIDTH), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(image)
-
-    # write strings to the buffer
-    font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Thin.ttf', 16)
-    font2 = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSans.ttf', 26)
-    font3 = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Light.ttf', 12)
-    font4 = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Thin.ttf', 10)
-    font5 = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold.ttf', 23)
-
-    draw.rectangle((20, 6, 276, 48), fill = 0)
-    draw.text((26, 12), 'Bandwidth Monitor', font = font5, fill = 255)
-    draw.text((210, 36), 'V0.4 by HoChri', font = font4, fill = 255)
-
-    start_y = 53
-    offset_y_1 = 19
-    offset_y_2 = 27
-    draw.text((6, start_y), "Ping:", font=font, fill = COLORED)
-    draw.text((10, start_y + offset_y_1), ('{:5.1f}'.format(ping)), font=font2, fill = COLORED)
-    draw.text((76, start_y + offset_y_2), 'ms', font=font3, fill = COLORED)
-
-    draw.text((100, start_y), "Download:", font=font, fill=COLORED)
-    draw.text((100, start_y + offset_y_1), ('{:5.2f}'.format(bw_down/1E6,2)), font=font2, fill=COLORED)
-    draw.text((168, start_y + offset_y_2), 'Mbps', font=font3, fill=COLORED)
-
-    draw.text((210, start_y), "Upload:", font=font, fill=COLORED)
-    draw.text((210, start_y + offset_y_1), ('{:4.2f}'.format(bw_up/1E6,2)), font=font2, fill=COLORED)
-    draw.text((264, start_y + offset_y_2), 'Mbps', font=font3, fill=COLORED)
-
-    current_time = time.strftime("%H:%M:%S, %d.%m.%Y")
-    draw.text((6, 105), 'tested @' + current_time, font=font3, fill=COLORED)
-
-
-    # display the frame
-    epd.Clear(0xFF)
-    #epd.set_frame_memory(image.rotate(270,expand=True), 0, 0)
-    epd.display(epd.getbuffer(image.rotate(270,expand=True)))
-    epd.sleep()
-
-    payload = {VARIABLE_LABEL_1: round(bw_up/1E6,2),
-               VARIABLE_LABEL_2: round(bw_down/1E6,2),
-               VARIABLE_LABEL_3: round(ping,2)}
-
+    payload = {VARIABLE_LABEL_1: round(bw_up/1E6, 2),
+               VARIABLE_LABEL_2: round(bw_down/1E6, 2),
+               VARIABLE_LABEL_3: round(ping, 2)}
 
     if print_messages:
         print("[INFO] Attemping to send data")
     post_request(payload)
     if print_messages:
         print("[INFO] finished")
+
 
 if __name__ == '__main__':
     main()

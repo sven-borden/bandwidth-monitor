@@ -221,7 +221,7 @@ class EPD:
         for j in range(0, self.height):
             self.SetCursor(0, j)
             self.send_command(WRITE_RAM)
-            for i in range(0, self.width // 8):
+            for i in range(0, self.width / 8):
                 self.send_data(color)
         self.TurnOnDisplay()
 

@@ -158,11 +158,11 @@ def main():
     draw = ImageDraw.Draw(image)
 
     # write strings to the buffer
-    font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Thin.ttf', 16)
-    font2 = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSans.ttf', 26)
-    font3 = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Light.ttf', 12)
-    font4 = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Thin.ttf', 10)
-    font5 = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold.ttf', 23)
+    font = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Thin.ttf', 16)
+    font2 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/droid.ttf', 26)
+    font3 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Light.ttf', 12)
+    font4 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Thin.ttf', 10)
+    font5 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Verdana_Bold.ttf', 23)
 
     draw.rectangle((20, 6, 276, 48), fill = 0)
     draw.text((26, 12), 'Bandwidth Monitor', font = font5, fill = 255)

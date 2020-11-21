@@ -1,3 +1,4 @@
 speedtest-cli
 pillow
 RPi.GPIO
+spidev

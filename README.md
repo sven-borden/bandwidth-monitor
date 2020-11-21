@@ -27,7 +27,7 @@ Using a raspberry pi to monitor continously the bandwidth of wifi at home.
     - `git clone https://github.com/sven-borden/bandwidth-monitor.git`
 5. Install dependencies
     - `pip3 install -r requirements.txt`
-    - `sudo apt-get install wiringpi`
+    - Follow instruction on this page : https://www.waveshare.com/wiki/Pioneer600#Libraries_Installation_for_RPi
 6. From `sudo raspi-config`
     - Enable SSH
     - Enable SPI

@@ -166,7 +166,6 @@ def main():
 
     draw.rectangle((20, 6, 276, 48), fill = 0)
     draw.text((26, 12), 'Bandwidth Monitor', font = font5, fill = 255)
-    draw.text((210, 36), 'V0.4 by HoChri', font = font4, fill = 255)
 
     start_y = 53
     offset_y_1 = 19

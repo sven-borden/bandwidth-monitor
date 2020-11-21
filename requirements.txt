@@ -1,4 +1,7 @@
 speedtest-cli
 pillow
+PIL
+image
 RPi.GPIO
 spidev
+epdif

@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 
 import epd2in9
-import Image
-import ImageFont
-import ImageDraw
+from PIL import Image, ImageFont, ImageDraw
 import time
 
 COLORED = 0

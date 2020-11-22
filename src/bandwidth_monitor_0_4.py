@@ -24,7 +24,7 @@ GPIO.output(GREEN, GPIO.HIGH)
 GPIO.output(BLUE, GPIO.HIGH)
 GPIO.output(RED, GPIO.HIGH)
 
-with open('config.json') as f:
+with open('/home/pi/bandwidth-monitor/src/config.json') as f:
     j = json.load(f)
     TOKEN = j['token']
     DEVICE_LABEL = j['device']
@@ -159,7 +159,7 @@ def main():
 
     # write strings to the buffer
     font = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Thin.ttf', 16)
-    font2 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Black.ttf', 26)
+    font2 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Black.ttf', 24)
     font3 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Light.ttf', 12)
     font4 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Roboto-Thin.ttf', 10)
     font5 = ImageFont.truetype('/home/pi/bandwidth-monitor/src/fonts/Verdana_Bold.ttf', 23)

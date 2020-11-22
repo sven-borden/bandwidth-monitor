@@ -171,15 +171,15 @@ def main():
     offset_y_1 = 19
     offset_y_2 = 27
     draw.text((6, start_y), "Ping:", font=font, fill = COLORED)
-    draw.text((10, start_y + offset_y_1), ('{:5.1f}'.format(ping)), font=font2, fill = COLORED)
+    draw.text((10, start_y + offset_y_1), ('{:5.0f}'.format(ping)), font=font2, fill = COLORED)
     draw.text((76, start_y + offset_y_2), 'ms', font=font3, fill = COLORED)
 
     draw.text((100, start_y), "Download:", font=font, fill=COLORED)
-    draw.text((100, start_y + offset_y_1), ('{:5.2f}'.format(bw_down/1E6,2)), font=font2, fill=COLORED)
+    draw.text((100, start_y + offset_y_1), ('{:5.0f}'.format(bw_down/1E6,2)), font=font2, fill=COLORED)
     draw.text((168, start_y + offset_y_2), 'Mbps', font=font3, fill=COLORED)
 
     draw.text((210, start_y), "Upload:", font=font, fill=COLORED)
-    draw.text((210, start_y + offset_y_1), ('{:4.2f}'.format(bw_up/1E6,2)), font=font2, fill=COLORED)
+    draw.text((210, start_y + offset_y_1), ('{:4.0f}'.format(bw_up/1E6,2)), font=font2, fill=COLORED)
     draw.text((264, start_y + offset_y_2), 'Mbps', font=font3, fill=COLORED)
 
     current_time = time.strftime("%H:%M:%S, %d.%m.%Y")

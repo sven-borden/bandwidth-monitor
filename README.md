@@ -27,6 +27,7 @@ Using a raspberry pi to monitor continously the bandwidth of wifi at home.
     - `git clone https://github.com/sven-borden/bandwidth-monitor.git`
 5. Install dependencies
     - `pip3 install -r requirements.txt`
+    - `sudo apt-get install ttf-mscorefonts-installer`
     - Follow instruction on this page : https://www.waveshare.com/wiki/Pioneer600#Libraries_Installation_for_RPi
 6. From `sudo raspi-config`
     - Enable SSH
@@ -38,6 +39,6 @@ Using a raspberry pi to monitor continously the bandwidth of wifi at home.
 8. Open `crontab -e` and add following lines
     - `@reboot /usr/bin/python /home/pi/bandwidth_monitor/post_restart_message.py &`
     - `@reboot sleep 30 && /usr/bin/python /home/pi/bandwidth_monitor/poll_test_now_button.py`
-    - `*/30 * * * * /home/pi/bandwidth_monitor/speedtest-cron.sh`
+    - `*/30 * * * * /usr/bin/python3 /home/pi/bandwidth_monitor/src/bandwidth_monitor_0_4.py`
     - `*/3 * * * * /usr/bin/python /home/pi/bandwidth_monitor/poll_killswitch.py`
     - `13 03 * * * /usr/bin/python /home/pi/bandwidth_monitor/refresh_display.py`

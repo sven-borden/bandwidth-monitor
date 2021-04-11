@@ -37,7 +37,7 @@ VARIABLE_2 = "reset-code"  # Put your second variable label here
 
 COLORED = 0
 
-print_messages = False
+print_messages = True
 
 lower_limit = 5000000  # Threshold for download speed -> modem will be reseted
 max_iterations = 3
@@ -149,8 +149,8 @@ def main():
         if bw_down < lower_limit:
             red_LED_on(True)
             if print_messages:
-                print("try again in 60sec")
-            time.sleep(60)
+                print("try again in 10sec")
+            time.sleep(10)
         else:
             red_LED_on(False)
 

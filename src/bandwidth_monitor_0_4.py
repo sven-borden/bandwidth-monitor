@@ -37,7 +37,7 @@ VARIABLE_2 = "reset-code"  # Put your second variable label here
 
 COLORED = 0
 
-print_messages = False
+print_messages = True
 
 lower_limit = 5000000  # Threshold for download speed -> modem will be reseted
 max_iterations = 3

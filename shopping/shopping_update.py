@@ -2,7 +2,7 @@ import urllib.request
 import re 
 import json
 import ftplib 
-
+import datetime
 
 content = []
 
@@ -21,7 +21,8 @@ def load_helifree():
                     "shop": "Helifree",
                     "item": url[1],
                     "availability": "0",
-                    "link": url[0]
+                    "link": url[0],
+                    "time": datetime.datetime.now().strftime("%c")
                 }
             )
         else:
@@ -33,7 +34,8 @@ def load_helifree():
                         "shop": "Helifree",
                         "item": url[1],
                         "availability": x[0].split("\"")[1],
-                        "link": url[0]
+                        "link": url[0],
+                        "time": datetime.datetime.now().strftime("%c")
                     }
                 )
             else:
@@ -42,7 +44,8 @@ def load_helifree():
                         "shop": "Helifree",
                         "item": url[1],
                         "availability": "unkown",
-                        "link": url[0]
+                        "link": url[0],
+                        "time": datetime.datetime.now().strftime("%c")
                     }
                 )
 
@@ -58,7 +61,7 @@ with ftplib.FTP('y737d.ftp.infomaniak.com') as ftp:
     filename = 'shopping.json'
 
     try:
-        ftp.login('y737d_cocktail', '')  
+        ftp.login('y737d_cocktail', 'Im4g33k!')
 
         with open(filename, 'rb') as fp:
 

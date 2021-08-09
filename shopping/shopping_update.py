@@ -10,6 +10,8 @@ content = []
 def load_helifree():
     urls = [
         ["https://helifree.ch/caddx-digital-fpv/4785-caddx-air-unit-hd-micro-version", "Caddx Air Unit"],
+        ["https://helifree.ch/caddx-digital-fpv/4910-caddx-polar-air-unit-hd-kit-silver", "Caddx Polar Vista"],
+        ["https://helifree.ch/caddx-digital-fpv/4909-caddx-polar-air-unit-hd-kit-silver", "Caddx Polar Air Unit"]
     ]
     # Caddx air unit
     for url in urls:
